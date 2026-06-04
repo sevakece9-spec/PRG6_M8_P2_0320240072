@@ -1,0 +1,245 @@
+import { StyleSheet, Platform, View, Text, TouchableOpacity, StatusBar } from 'react-native';
+import { router } from 'expo-router';
+
+export default function HomeScreen() {
+  const goToReminder = () => {
+    router.push('/(tabs)/explore');
+  };
+
+  const FEATURES = [
+    { icon: '🔔', bg: '#f5f3ff', title: 'Push notification', sub: 'Notifikasi langsung ke perangkat' },
+    { icon: '🕐', bg: '#fffbeb', title: 'Jadwal otomatis', sub: 'Atur kapan notifikasi dikirim' },
+    { icon: '📋', bg: '#fff1ee', title: 'Kelola reminder', sub: 'Tambah & hapus dengan mudah' },
+  ];
+
+  return (
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#2563eb" />
+
+      {/* ── HERO ── */}
+      <View style={styles.hero}>
+        <View style={styles.circle1} />
+        <View style={styles.circle2} />
+
+        <View style={styles.heroIconBox}>
+          <Text style={{ fontSize: 26 }}>⏰</Text>
+        </View>
+
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>✦  Reminder App</Text>
+        </View>
+
+        <Text style={styles.heroTitle}>Atur waktu,{'\n'}tetap produktif</Text>
+        <Text style={styles.heroSub}>
+          Kelola reminder & notifikasi kamu dengan mudah kapan saja
+        </Text>
+      </View>
+
+      {/* ── BODY ── */}
+      <View style={styles.body}>
+
+        {/* CTA card */}
+        <View style={styles.ctaCard}>
+          <View style={styles.ctaTop}>
+            <Text style={styles.ctaLabel}>REMINDER CONTROL</Text>
+            <View style={styles.activeDot} />
+          </View>
+          <Text style={styles.ctaTitle}>Mulai buat reminder</Text>
+          <Text style={styles.ctaDesc}>
+            Tambah, hapus, dan atur semua reminder kamu dalam satu tempat.
+          </Text>
+          <TouchableOpacity style={styles.btnPrimary} onPress={goToReminder} activeOpacity={0.85}>
+            <Text style={styles.btnText}>🔔  Buka Reminder  →</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Stats row */}
+        <View style={styles.statsRow}>
+          <View style={styles.statCard}>
+            <View style={[styles.statIcon, { backgroundColor: '#eff6ff' }]}>
+              <Text style={{ fontSize: 18 }}>🔔</Text>
+            </View>
+            <Text style={styles.statNum}>0</Text>
+            <Text style={styles.statLbl}>Reminder aktif</Text>
+          </View>
+          <View style={styles.statCard}>
+            <View style={[styles.statIcon, { backgroundColor: '#f0fdf4' }]}>
+              <Text style={{ fontSize: 18 }}>✅</Text>
+            </View>
+            <Text style={styles.statNum}>0</Text>
+            <Text style={styles.statLbl}>Selesai hari ini</Text>
+          </View>
+        </View>
+
+        {/* Feature list */}
+        <Text style={styles.sectionTitle}>Fitur utama</Text>
+        <View style={styles.featureCard}>
+          {FEATURES.map((f, i) => (
+            <View
+              key={i}
+              style={[styles.featureRow, i < FEATURES.length - 1 && styles.featureBorder]}
+            >
+              <View style={[styles.featureIcon, { backgroundColor: f.bg }]}>
+                <Text style={{ fontSize: 17 }}>{f.icon}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.featureMain}>{f.title}</Text>
+                <Text style={styles.featureSub}>{f.sub}</Text>
+              </View>
+              <Text style={styles.chevron}>›</Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Platform pill */}
+        <View style={styles.platformPill}>
+          <Text style={styles.platformText}>📱  Platform: {Platform.OS}</Text>
+        </View>
+
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f1f5f9',
+  },
+
+  // HERO
+  hero: {
+    backgroundColor: '#2563eb',
+    paddingTop: 56,
+    paddingBottom: 36,
+    paddingHorizontal: 24,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  circle1: {
+    position: 'absolute', width: 180, height: 180, borderRadius: 90,
+    backgroundColor: 'rgba(255,255,255,0.07)', top: -40, right: -40,
+  },
+  circle2: {
+    position: 'absolute', width: 100, height: 100, borderRadius: 50,
+    backgroundColor: 'rgba(255,255,255,0.05)', bottom: -20, left: 20,
+  },
+  heroIconBox: {
+    width: 56, height: 56, borderRadius: 16,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    alignItems: 'center', justifyContent: 'center',
+    marginBottom: 16, borderWidth: 0.5,
+    borderColor: 'rgba(255,255,255,0.2)',
+  },
+  badge: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderWidth: 0.5, borderColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 20, paddingHorizontal: 12, paddingVertical: 4,
+    marginBottom: 14,
+  },
+  badgeText: {
+    fontSize: 11, color: 'rgba(255,255,255,0.9)', fontWeight: '500',
+  },
+  heroTitle: {
+    fontSize: 28, fontWeight: '500', color: '#fff',
+    lineHeight: 34, marginBottom: 8,
+  },
+  heroSub: {
+    fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 20,
+  },
+
+  // BODY
+  body: {
+    padding: 16,
+    marginTop: -14,
+    gap: 14,
+  },
+
+  // CTA card
+  ctaCard: {
+    backgroundColor: '#fff', borderRadius: 20,
+    padding: 20, borderWidth: 0.5, borderColor: '#e2e8f0',
+  },
+  ctaTop: {
+    flexDirection: 'row', alignItems: 'center',
+    justifyContent: 'space-between', marginBottom: 10,
+  },
+  ctaLabel: {
+    fontSize: 11, fontWeight: '500', color: '#94a3b8', letterSpacing: 0.8,
+  },
+  activeDot: {
+    width: 8, height: 8, borderRadius: 4, backgroundColor: '#22c55e',
+  },
+  ctaTitle: {
+    fontSize: 18, fontWeight: '500', color: '#0f172a', marginBottom: 6,
+  },
+  ctaDesc: {
+    fontSize: 13, color: '#64748b', lineHeight: 20, marginBottom: 16,
+  },
+  btnPrimary: {
+    backgroundColor: '#2563eb', borderRadius: 12,
+    paddingVertical: 13, alignItems: 'center',
+  },
+  btnText: {
+    color: '#fff', fontSize: 14, fontWeight: '500',
+  },
+
+  // Stats
+  statsRow: {
+    flexDirection: 'row', gap: 12,
+  },
+  statCard: {
+    flex: 1, backgroundColor: '#fff', borderRadius: 16,
+    padding: 16, borderWidth: 0.5, borderColor: '#e2e8f0',
+  },
+  statIcon: {
+    width: 36, height: 36, borderRadius: 10,
+    alignItems: 'center', justifyContent: 'center', marginBottom: 12,
+  },
+  statNum: {
+    fontSize: 22, fontWeight: '500', color: '#0f172a', marginBottom: 2,
+  },
+  statLbl: {
+    fontSize: 12, color: '#64748b',
+  },
+
+  // Features
+  sectionTitle: {
+    fontSize: 13, fontWeight: '500', color: '#64748b', paddingHorizontal: 4,
+  },
+  featureCard: {
+    backgroundColor: '#fff', borderRadius: 16,
+    borderWidth: 0.5, borderColor: '#e2e8f0', overflow: 'hidden',
+  },
+  featureRow: {
+    flexDirection: 'row', alignItems: 'center',
+    gap: 12, padding: 14,
+  },
+  featureBorder: {
+    borderBottomWidth: 0.5, borderBottomColor: '#f1f5f9',
+  },
+  featureIcon: {
+    width: 36, height: 36, borderRadius: 10,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  featureMain: {
+    fontSize: 14, fontWeight: '500', color: '#0f172a',
+  },
+  featureSub: {
+    fontSize: 12, color: '#64748b', marginTop: 1,
+  },
+  chevron: {
+    fontSize: 20, color: '#94a3b8',
+  },
+
+  // Platform pill
+  platformPill: {
+    backgroundColor: '#f8fafc', borderRadius: 12,
+    padding: 10, alignItems: 'center',
+    borderWidth: 0.5, borderColor: '#e2e8f0',
+  },
+  platformText: {
+    fontSize: 12, color: '#94a3b8',
+  },
+});
